@@ -22,16 +22,64 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
 	const db = client.db(databaseName)
 
-	db.collection('task').findOne({_id: new ObjectID("5cd8c70e5f72730400329cd6")}, (error, task) => {
-		if (error) {
-			return console.log('Unable to fetch')
-		}
-		return console.log(task)
+	/* Delete one and delete many*/
+
+	// db.collection('users').deleteMany({
+	// 	name: 'Andy'
+	// }).then(result => {
+	// 	console.log(result)
+	// }).catch(error=> {
+	// 	console.log(error)
+	// })
+
+	db.collection('users').deleteOne({
+		name: 'Andres'
+	}).then(result => {
+		console.log(result)
+	}).catch(error => {
+		console.log(error)
 	})
 
-	db.collection('task').find({completed: true}).toArray((error, tasks) => {
-		return console.log(tasks)
-	})
+/*Find one and find all */
+
+	// db.collection('task').findOne({_id: new ObjectID("5cd8c70e5f72730400329cd6")}, (error, task) => {
+	// 	if (error) {
+	// 		return console.log('Unable to fetch')
+	// 	}
+	// 	return console.log(task)
+	// })
+
+	// db.collection('task').find({completed: true}).toArray((error, tasks) => {
+	// 	return console.log(tasks)
+	// })
+
+/*Update one nad update many */
+
+	// db.collection('users').updateOne({
+	// 	_id: new ObjectID("5cd8ba97a981c08226a0a8d8")
+	// }, {
+	// 	$inc: {
+	// 		age: 1
+	// 	},
+	// }).then(result => {
+	// 	console.log(result)
+	// }).catch( error => {
+	// 	console.log(error)
+	// })
+
+	// db.collection('users').updateMany({
+	// 	name: 'Andy'
+	// }, {
+	// 	$inc: {
+	// 		age: 1
+	// 	}
+	// }).then(result => {
+	// 	console.log(result.modifiedCount)
+	// }).catch(error => {
+	// 	console.log(error)
+	// })	
+
+
 
 	// db.collection('users').findOne({_id: new ObjectID("5cd8c5b67d63a2032c5cbd29")}, (error, user) => {
 	// 	if (error) {
