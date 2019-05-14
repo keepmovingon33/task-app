@@ -32,13 +32,13 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 	// 	console.log(error)
 	// })
 
-	db.collection('users').deleteOne({
-		name: 'Andres'
-	}).then(result => {
-		console.log(result)
-	}).catch(error => {
-		console.log(error)
-	})
+	// db.collection('users').deleteOne({
+	// 	name: 'Andres'
+	// }).then(result => {
+	// 	console.log(result)
+	// }).catch(error => {
+	// 	console.log(error)
+	// })
 
 /*Find one and find all */
 
