@@ -1,49 +1,11 @@
 const mongoose = require('mongoose')
-const validator = require('validator')
+// const validator = require('validator')
 
 mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
 	useNewUrlParser: true,
 	useCreateIndex: true
 })
 
-const User = mongoose.model('User', {
-	name: {
-		type: String,
-		required: true,
-		trim: true
-	},
-	age: {
-		type: Number,
-		default: 0,
-		validate(value) {
-			if (value <0) {
-				throw new Error('Age must be a positive number')
-			}
-		}
-	},
-	email: {
-		type: String,
-		required: true,
-		trim: true,
-		lowercase: true,
-		validate(value) {
-			if (!validator.isEmail(value)) {
-				throw new Error('Email is invalid')
-			}
-		}
-	},	
-	password: {
-		type: String,
-		required: true,
-		minlength: 7,
-		trim: true,
-		validate(value){
-			if (value.toLowerCase().includes('password')) {
-				throw new Error('Password cannot contain "password"')
-			}
-		}
-	} 
-})
 
 // const user3 = new User({
 // 	name: '    Jane  ',
@@ -72,11 +34,11 @@ const task4 = new Task({
 	description: '  task 5  '
 })
 
-task4.save().then(() => {
-	console.log(task4)
-}).catch(error => {
-	console.log(error)
-})
+// task4.save().then(() => {
+// 	console.log(task4)
+// }).catch(error => {
+// 	console.log(error)
+// })
 
 const Drink = mongoose.model('Water', {
 	name: {
