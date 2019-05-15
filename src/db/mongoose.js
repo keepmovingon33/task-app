@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 
 mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
 	useNewUrlParser: true,
-	useCreateIndex: true
+	useCreateIndex: true, 
+	useFindAndModify: false
 })
 
 
@@ -18,21 +19,11 @@ mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
 // 	console.log(error)
 // })
 
-const Task = mongoose.model('Tasks', {
-	description: {
-		type: String,
-		required: true,
-		trim: true
-	},
-	completed: {
-		type: Boolean,
-		default: false
-	}
-})
 
-const task4 = new Task({
-	description: '  task 5  '
-})
+
+// const task4 = new Task({
+// 	description: '  task 5  '
+// })
 
 // task4.save().then(() => {
 // 	console.log(task4)
@@ -40,43 +31,43 @@ const task4 = new Task({
 // 	console.log(error)
 // })
 
-const Drink = mongoose.model('Water', {
-	name: {
-		type: String
-	},
-	price: {
-		type: Number
-	}
-})
+// const Drink = mongoose.model('Water', {
+// 	name: {
+// 		type: String
+// 	},
+// 	price: {
+// 		type: Number
+// 	}
+// })
 
-const Feeling = mongoose.model('haPPiNeSS', {
-	name: {
-		type: String
-	}
-})
+// const Feeling = mongoose.model('haPPiNeSS', {
+// 	name: {
+// 		type: String
+// 	}
+// })
 
-const surprise = new Feeling({
-	name: "Surprise"
-})
+// const surprise = new Feeling({
+// 	name: "Surprise"
+// })
 
-const coca = new Drink({
-	name: 'Cocacola',
-	price: 1
-})
+// const coca = new Drink({
+// 	name: 'Cocacola',
+// 	price: 1
+// })
 
-const task1 = new Task({
-	description: 'Task1',
-	completed: true
-})
+// const task1 = new Task({
+// 	description: 'Task1',
+// 	completed: true
+// })
 
-const task2 = new Task({
-	description: 'Task2',
-	completed: false
-})
+// const task2 = new Task({
+// 	description: 'Task2',
+// 	completed: false
+// })
 
-const pepsi = new Drink({
-	price: -12
-})
+// const pepsi = new Drink({
+// 	price: -12
+// })
 // pepsi.save().then(() => {
 // 	console.log(pepsi)
 // }).catch(error => {
