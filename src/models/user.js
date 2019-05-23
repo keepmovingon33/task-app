@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
+const uniqueValidator = require('mongoose-unique-validator')
 const validator = require('validator')
 
 const userSchema = new mongoose.Schema({
@@ -20,6 +21,7 @@ const userSchema = new mongoose.Schema({
 	},
 	email: {
 		type: String,
+		unique: true,
 		required: true,
 		trim: true,
 		lowercase: true,
@@ -43,11 +45,31 @@ const userSchema = new mongoose.Schema({
 
 })
 
+userSchema.plugin(uniqueValidator)
+
+userSchema.statics.findByCredentials = async (email, password)=> {
+	const user = await User.findOne({ email })
+
+	if (!user) {
+		throw new Error('Unable to login')
+	}
+
+	const isMatch = await bcrypt.compare(password, user.password)
+	if (!isMatch) {
+		throw new Error('Unable to login!')
+	}
+
+	console.log('Good JOb')
+	return user
+}
+
+// Hash the plain text password before saving
 userSchema.pre('save', async function(next){
 	const user = this
 	if (user.isModified('password')){
 		user.password = await bcrypt.hash(user.password, 8)
 	}
+	console.log('hey')
 	next()
 })
 

@@ -12,6 +12,7 @@ router.post('/users', async (req, res) => {
 
 	try {
 		await user.save()
+		console.log('Chicago')
 		res.status(201).send(user)
 	} catch (e) {
 		res.status(400).send(e)
@@ -24,6 +25,17 @@ router.post('/users', async (req, res) => {
 	// }).catch((error) => {
 	// 	res.status(400).send(error)
 	// })
+})
+
+router.post('/users/login', async (req, res) => {
+	try {
+		const user = await User.findByCredentials(req.body.email, req.body.password)
+		console.log('Seattle')
+		res.send(user)
+	} catch (e) {
+		console.log('usa')
+		res.status(400).send()
+	}
 })
 
 router.get('/users', async (req, res) => {
@@ -53,6 +65,7 @@ router.get('/users/:id', async (req, res) => {
 		}
 		res.send(user)
 	} catch (e) {
+		console.log('noo')
 		res.status(500).send()
 	}
 
