@@ -52,6 +52,12 @@ const userSchema = new mongoose.Schema({
 
 })
 
+userSchema.virtual('tasks', {
+	ref: 'Task',
+	localField: '_id',
+	foreignField: 'owner'
+})
+
 // We don't use arrow function ES6 because 'this' is not for ES6
 // That's why we are using normal function
 
