@@ -23,9 +23,9 @@ const port = process.env.PORT || 3000
 // 2. Send back a maintenance message with a 503 status code
 // 3. Try your requests from the server and confirm status/message shows
 
-app.use((req, res, next) => {
-	res.status(503).send('Site is currently down. Check back soon!')
-})
+// app.use((req, res, next) => {
+// 	res.status(503).send('Site is currently down. Check back soon!')
+// })
 
 app.use(express.json())
 app.use(userRouter)
