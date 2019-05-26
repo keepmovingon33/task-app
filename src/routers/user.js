@@ -67,10 +67,8 @@ router.post('/users/logoutALL', auth, async (req, res) => {
 	try {
 		req.user.tokens = []
 		await req.user.save()
-		console.log('hi')
 		res.send()
 	} catch (e) {
-		console.log('noooo')
 		res.status(500).send()
 	}
 })
@@ -96,19 +94,6 @@ router.get('/users/me', auth, async (req, res) => {
 	// })
 })
 
-router.get('/users/:id', async (req, res) => {
-	const _id = req.params.id
-
-	try {
-		const user = await User.findById(_id)
-		if (!user) {
-			return res.status(404).send()
-		}
-		res.send(user)
-	} catch (e) {
-		console.log('noo')
-		res.status(500).send()
-	}
 
 	
 	// User.findById(_id).then((user)=>{
@@ -119,11 +104,20 @@ router.get('/users/:id', async (req, res) => {
 	// }).catch(e => {
 	// 	res.status(500).send()
 	// })
-})
 
 
 // patch is for find and update
-router.patch('/users/:id', async(req, res) => {
+
+//
+// Goal: Refactor the update profile route
+//
+// 1. Update the URL to /users/me
+// 2. Add the authentication middleware into the mix
+// 3. Use the existing user document instead of fetching via param id
+// 4. Test your work in Posman
+
+
+router.patch('/users/me', auth, async(req, res) => {
 	const updates = Object.keys(req.body)
 	const allowedUpdates = ['name', 'email', 'password', 'age']
 	const isValidOperation = updates.every(update => allowedUpdates.includes(update))
@@ -131,15 +125,21 @@ router.patch('/users/:id', async(req, res) => {
 	if (!isValidOperation) {
 		return res.status(400).send({error: 'Invalid updates!'})
 	}
-	const _id = req.params.id
+//	const _id = req.params.id
 	try {
-		const user = await User.findById(req.params.id)
+//		const user = await User.findById(req.params.id)
+
+		const user = await req.user
 		updates.forEach((update) =>user[update] = req.body[update])
 		await user.save()
 		// const user = await User.findByIdAndUpdate(_id, req.body, {new: true, runValidators: true})
-		if (!user) {
-			return res.status(404).send()
-		}
+
+		// because this user is logged in already
+		// so we don't have to check if this user is logged in or not
+
+		// if (!user) {
+		// 	return res.status(404).send()
+		// }
 
 		res.send(user)
 	} catch (e) {
@@ -148,15 +148,20 @@ router.patch('/users/:id', async(req, res) => {
 })
 
 
-router.delete('/users/:id', async(req, res) => {
+router.delete('/users/me', auth, async(req, res) => {
 	try {
-		const user = await User.findByIdAndDelete(req.params.id)
+		// const user = await User.findByIdAndDelete(req.user._id)
 		
-		if (!user) {
-			return res.status(404).send()
-		}
+		// because this user is logged in already
+		// so we don't have to check if this user is logged in or not
 
-		res.send(user)
+		// if (!user) {
+		// 	return res.status(404).send()
+		// }
+
+		await req.user.remove()
+
+		res.send(req.user.user)
 	} catch(e) {
 		res.status(500).send(e)
 

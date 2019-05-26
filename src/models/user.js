@@ -52,6 +52,19 @@ const userSchema = new mongoose.Schema({
 
 })
 
+// We don't use arrow function ES6 because 'this' is not for ES6
+// That's why we are using normal function
+
+userSchema.methods.toJSON = function () {
+	const user = this
+	const userObject = user.toObject()
+
+	delete userObject.password
+	delete userObject.tokens
+
+	return userObject
+}
+
 userSchema.methods.generateAuthToken = async function() {
 	const user = this
 	const token = jwt.sign({_id: user._id.toString()}, 'thisismynewcourse')
